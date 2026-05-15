@@ -20,12 +20,12 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-dark);min-height:100vh;overflow-x:hidden}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-dark);min-height:100vh;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:none}
 ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--primary-light);border-radius:3px}
 /* SCREENS */
 .screen{display:none;min-height:100vh}.screen.active{display:flex}
 /* LOGIN */
-#loginScreen{background:linear-gradient(135deg,#0a2218 0%,#1a6b4a 50%,#0d3d28 100%);flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+#loginScreen{background:linear-gradient(135deg,#0a2218 0%,#1a6b4a 50%,#0d3d28 100%);flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:20px;padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))}
 #loginScreen::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(240,165,0,.12) 0%,transparent 70%);top:-100px;right:-100px;border-radius:50%}
 #loginScreen::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(45,155,110,.15) 0%,transparent 70%);bottom:-50px;left:-80px;border-radius:50%}
 .login-box{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:48px 44px;width:100%;max-width:440px;position:relative;z-index:1;animation:fadeUp .6s ease}
@@ -57,7 +57,7 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-dark
 /* LAYOUT */
 #adminScreen,#studentScreen{flex-direction:row}
 /* SIDEBAR */
-.sidebar{width:var(--sw);min-height:100vh;background:var(--sidebar-bg);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:4px 0 24px rgba(0,0,0,.25)}
+.sidebar{width:var(--sw);min-height:100vh;background:var(--sidebar-bg);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:4px 0 24px rgba(0,0,0,.25);will-change:transform;-webkit-overflow-scrolling:touch}
 .sidebar.collapsed{transform:translateX(-100%)}
 .sidebar-header{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px}
 .sidebar-logo{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--primary-light));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(240,165,0,.3)}
@@ -81,13 +81,14 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text-dark
 .main-content{flex:1;margin-left:var(--sw);transition:margin-left .3s;min-height:100vh;display:flex;flex-direction:column}
 .main-content.expanded{margin-left:0}
 /* TOPBAR */
-.topbar{background:var(--card);padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.topbar-left{display:flex;align-items:center;gap:16px}
-.hamburger{width:38px;height:38px;border:none;background:var(--bg);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--text-mid);transition:all .2s}
+.topbar{background:var(--card);padding:0 28px;height:68px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06);min-width:0}
+.topbar-left{display:flex;align-items:center;gap:16px;min-width:0;flex:1}
+.hamburger{width:38px;height:38px;border:none;background:var(--bg);border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--text-mid);transition:all .2s;flex-shrink:0}
 .hamburger:hover{background:var(--primary);color:#fff}
-.page-title h2{font-size:1.1rem;font-weight:700;color:var(--text-dark)}
-.page-title p{font-size:.75rem;color:var(--text-light)}
-.topbar-right{display:flex;align-items:center;gap:12px}
+.page-title{min-width:0;overflow:hidden}
+.page-title h2{font-size:1.1rem;font-weight:700;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.page-title p{font-size:.75rem;color:var(--text-light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .topbar-icon{width:38px;height:38px;background:var(--bg);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-mid);font-size:1rem;transition:all .2s;position:relative}
 .topbar-icon:hover{background:var(--primary);color:#fff}
 .notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:2px solid var(--card)}
@@ -288,9 +289,9 @@ tbody tr:hover{background:rgba(26,107,74,.03)}
 .mv-checklist li:last-child{border-bottom:none}
 .mv-checklist li i{font-size:.95rem;width:18px;text-align:center}
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:20px;padding-bottom:max(20px,env(safe-area-inset-bottom));overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--card);border-radius:var(--radius);width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);transform:translateY(20px) scale(.97);transition:all .3s}
+.modal{background:var(--card);border-radius:var(--radius);width:100%;max-width:580px;max-height:none;overflow-y:visible;box-shadow:0 20px 60px rgba(0,0,0,.3);transform:translateY(20px) scale(.97);transition:all .3s;will-change:transform;margin:auto}
 .modal-overlay.open .modal{transform:translateY(0) scale(1)}
 .modal-lg{max-width:780px}
 .modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--card);z-index:1}
@@ -332,8 +333,8 @@ tbody tr:hover{background:rgba(26,107,74,.03)}
 /* CONFIRM */
 .confirm-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem}
 /* TOAST */
-.toast{position:fixed;top:78px;right:20px;z-index:9999;background:var(--card);border-radius:var(--radius-sm);border-left:4px solid var(--success);padding:14px 20px;box-shadow:0 8px 28px rgba(0,0,0,.15);display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;color:var(--text-dark);transform:translateX(130%);transition:transform .4s cubic-bezier(.4,0,.2,1);min-width:280px;max-width:360px}
-.toast.show{transform:translateX(0)}
+.toast{position:fixed;bottom:28px;right:24px;z-index:9999;background:var(--card);border-radius:var(--radius-sm);border-left:4px solid var(--success);padding:14px 20px;box-shadow:0 8px 28px rgba(0,0,0,.18);display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;color:var(--text-dark);transform:translateY(120%);opacity:0;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s ease;max-width:340px;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1;pointer-events:auto}
 .toast i{font-size:1.1rem;flex-shrink:0}
 /* STUDENT SIDEBAR */
 .student-sidebar{background:linear-gradient(180deg,#0a2218 0%,#1a4a32 100%)}
@@ -346,8 +347,8 @@ tbody tr:hover{background:rgba(26,107,74,.03)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 /* RESPONSIVE */
 @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}.student-home-grid{grid-template-columns:1fr}.mod-prog-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.mobile-open{transform:translateX(0)}.main-content{margin-left:0!important}.stats-grid{grid-template-columns:1fr 1fr}.topbar{padding:0 16px}.page-section{padding:16px}.form-row{grid-template-columns:1fr}.mod-prog-grid{grid-template-columns:1fr 1fr}.profile-stat-row{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.stats-grid{grid-template-columns:1fr}.login-box{padding:28px 20px}.cert-grid{grid-template-columns:1fr}.mod-prog-grid{grid-template-columns:1fr}.choices-builder{grid-template-columns:1fr}}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.mobile-open{transform:translateX(0)}.main-content{margin-left:0!important}.stats-grid{grid-template-columns:1fr 1fr}.topbar{padding:0 12px;gap:8px}.page-section{padding:16px}.form-row{grid-template-columns:1fr}.mod-prog-grid{grid-template-columns:1fr 1fr}.profile-stat-row{grid-template-columns:1fr 1fr}.topbar-right{gap:6px}.topbar-icon:not(.notif-icon){display:none}}
+@media(max-width:480px){.stats-grid{grid-template-columns:1fr}.login-box{padding:28px 16px;margin:16px;width:calc(100% - 32px);padding-bottom:max(28px,env(safe-area-inset-bottom))}.cert-grid{grid-template-columns:1fr}.mod-prog-grid{grid-template-columns:1fr}.choices-builder{grid-template-columns:1fr}.quiz-item{flex-wrap:wrap;gap:10px}.module-actions{margin-left:auto}}
 </style>
 </head>
 <body>
@@ -821,6 +822,59 @@ const sampleQuizData={
   ]
 };
 
+// Per-quiz question bank (keyed by quiz id)
+const quizDB={
+  1:{title:'Pre-test: Ang Sarili Ko',type:'Multiple Choice',questions:[
+    {type:'mc',q:'Ano ang tinutukoy ng salitang "pagkakakilanlan"?',choices:['Ang iyong paboritong pagkain','Ang kabuuan ng iyong katangian at karanasan','Ang iyong paboritong lugar','Ang iyong talento sa musika'],answer:1},
+    {type:'mc',q:'Alin sa mga sumusunod ang halimbawa ng positibong katangian ng sarili?',choices:['Tamad','Mapagmalakin','Malikhain at mapagkumpiyansa','Palaging nagdadampi'],answer:2},
+    {type:'mc',q:'Bakit mahalaga ang pagmamahal sa sarili?',choices:['Para maging palalo','Para makapagbigay ng pagmamahal sa iba','Para walang makapantay','Para hindi na mangailangan ng iba'],answer:1},
+    {type:'mc',q:'Ang pagkakakilanlan ng isang tao ay nabubuo batay sa?',choices:['Panlabas na anyo lamang','Mga katangian, karanasan, at paniniwala','Kayamanan at katayuan sa buhay','Kulay ng balat'],answer:1},
+    {type:'mc',q:'Ano ang epekto ng positibong pagpapahalaga sa sarili?',choices:['Nagiging palalo ang tao','Napapabuti ang relasyon sa iba','Nagiging mapanghusga','Walang epekto'],answer:1},
+  ]},
+  2:{title:'Quiz 1: Pagkakakilanlan',type:'Multiple Choice',questions:[
+    {type:'mc',q:'Ang sariling pagkakakilanlan ay nabubuo sa pamamagitan ng?',choices:['Pananamit lamang','Mga karanasan at interaksyon sa lipunan','Kayamanan','Katanyagan'],answer:1},
+    {type:'mc',q:'Alin sa sumusunod ang nagpapakita ng positibong pagpapahalaga sa sarili?',choices:['Pag-iwas sa mga hamon','Pagtanggap sa mga pagkakamali at pagkatuto','Pagpapanggap na walang kapintasan','Paghahambing sa iba'],answer:1},
+    {type:'mc',q:'Ang pagmamahal sa sarili ay nangangahulugang?',choices:['Pagiging mapagmataas','Pagkilala at pagtanggap sa sariling kalakasan at kahinaan','Pag-iisip lamang sa sarili','Pagtanggi sa tulong ng iba'],answer:1},
+  ]},
+  3:{title:'Gawain 1: Liham sa Sarili',type:'Gawain',questions:[
+    {type:'essay',q:'Sumulat ng maikling liham para sa iyong sarili sa hinaharap. Isama ang iyong mga pangarap, kalakasan, at mga bagay na nais mong pagbutihin. (Minimum 3 pangungusap)'},
+    {type:'essay',q:'Ilarawan ang isang karanasan na nagpalakas ng iyong tiwala sa sarili. Paano ka natuto mula rito?'},
+  ]},
+  4:{title:'Gawain 2: Mapa ng Sarili',type:'Gawain',questions:[
+    {type:'essay',q:'Ilarawan ang iyong "mapa ng sarili" — ang iyong pinakamahahalagang katangian, halaga, at pangarap. Isulat sa 3–5 pangungusap.'},
+    {type:'essay',q:'Sino ang mga taong nagbibigay ng malaking impluwensya sa iyong pagkakakilanlan? Paano sila nakatulong sa iyong pag-unlad?'},
+  ]},
+  5:{title:'Pagninilay: Sino Ako?',type:'Reflection (Pagninilay)',questions:[
+    {type:'reflect',q:'Sa iyong sariling salita, ilarawan ang iyong pinakamagandang katangian at kung paano ito nakikinabangan ng iyong pamilya at komunidad.'},
+    {type:'reflect',q:'Bilang isang kabataan, paano mo gagamitin ang iyong pagkakakilanlan upang makapag-ambag sa lipunan?'},
+    {type:'reflect',q:'Ano ang iyong mga pangarap para sa iyong sarili sa loob ng 5 taon? Paano mo ito makakamit?'},
+  ]},
+  6:{title:'Pre-test: Pamilya at Lipunan',type:'Multiple Choice',questions:[
+    {type:'mc',q:'Ano ang pangunahing tungkulin ng pamilya sa lipunan?',choices:['Pagbibigay ng pera','Pagpapalaki at paghubog ng bata','Pagkuha ng politikal na kapangyarihan','Walang tungkulin'],answer:1},
+    {type:'mc',q:'Ang indibidwal ay may responsibilidad sa kanyang komunidad dahil?',choices:['Sapilitan ito ng batas','Siya ay bahagi ng isang mas malaking lipunan','Para maiwasan ang parusa','Wala itong dahilan'],answer:1},
+    {type:'mc',q:'Ano ang kahulugan ng "bayanihan"?',choices:['Pakikipaglaban','Sama-samang pagtutulungan para sa kabutihan ng lahat','Pagnanakaw ng ari-arian','Pagiging makasarili'],answer:1},
+  ]},
+  7:{title:'Quiz 1: Mga Tungkulin',type:'Fill in the Blank',questions:[
+    {type:'fill',q:'Ang ________ ay ang pangunahing yunit ng lipunan na binubuo ng mga taong may ugnayan sa isa\'t isa.',answer:'pamilya'},
+    {type:'fill',q:'Ang pagtulong sa kapwa nang walang bayad ay tinatawag na ________.',answer:'pagkukusang-loob'},
+    {type:'fill',q:'Ang ________ ay ang kabuuan ng mga kaugalian, tradisyon, at paniniwala ng isang grupo ng tao.',answer:'kultura'},
+  ]},
+  8:{title:'Gawain 1: Family Tree',type:'Gawain',questions:[
+    {type:'essay',q:'Ilarawan ang iyong pamilya at ang papel ng bawat miyembro. Paano nagkakaisa ang inyong pamilya sa oras ng hamon?'},
+    {type:'essay',q:'Ano ang mga tradisyon o kaugalian ng inyong pamilya na ipinagmamalaki mo? Ipaliwanag kung bakit ito mahalaga sa inyo.'},
+  ]},
+  9:{title:'Pre-test: Kulturang Pilipino',type:'Identification',questions:[
+    {type:'id',q:'Ang pambansang ibon ng Pilipinas na simbolo ng kalayaan at lakas.',answer:'Philippine Eagle'},
+    {type:'id',q:'Ang tradisyonal na damit pambansa ng mga Pilipinong babae.',answer:'Baro\'t Saya'},
+    {type:'id',q:'Ang salitang Tagalog para sa pagbibigay-galang sa matatanda sa pamamagitan ng "po" at "opo".',answer:'Paggalang'},
+  ]},
+  10:{title:'Pre-test: Pagpapahalaga sa Buhay',type:'Multiple Choice',questions:[
+    {type:'mc',q:'Ano ang ibig sabihin ng "pagpapahalaga sa buhay"?',choices:['Pagbibigay ng halaga sa materyal na bagay lamang','Pagkilala sa kahalagahan at kahulugan ng pag-iral ng tao','Paghahanap ng kasiyahan lamang','Pag-iwas sa mga responsibilidad'],answer:1},
+    {type:'mc',q:'Alin sa mga sumusunod ang nagpapakita ng pagpapahalaga sa buhay?',choices:['Pag-aaksaya ng pagkain','Pagtulong sa nangangailangan','Pagiging walang pakialam sa kapaligiran','Pagpapabaya sa sarili'],answer:1},
+    {type:'mc',q:'Bakit mahalaga ang pagpapahalaga sa buhay ng iba?',choices:['Para makakuha ng gantimpala','Dahil ang bawat tao ay may likas na dignidad at karapatan','Para lamang sumunod sa batas','Walang dahilan'],answer:1},
+  ]},
+};
+
 // ========== INIT ==========
 window.onload=()=>{
   buildAvatarGrid();
@@ -925,12 +979,23 @@ function closeSidebar(role){
   document.getElementById(role+'Main').classList.remove('expanded');
 }
 
+// Close mobile sidebar on window resize to desktop
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>768){
+    ['admin','student'].forEach(role=>{
+      const ov=document.getElementById(role+'Overlay');
+      if(ov)ov.classList.remove('show');
+    });
+  }
+});
+
 // ========== ADMIN NAV ==========
 function adminNav(page,el){
   document.querySelectorAll('#adminSidebar .nav-item').forEach(x=>x.classList.remove('active'));
   if(el) el.classList.add('active');
   document.querySelectorAll('#adminMain .page-section').forEach(x=>x.classList.remove('active'));
   document.getElementById('adminPage-'+page).classList.add('active');
+  if(window.innerWidth<=768)closeSidebar('admin');
   const titles={dashboard:['Dashboard','Welcome back, Dr. Santos!'],modules:['Modules','Manage your learning materials'],quizzes:['Quizzes','Assessments & activities'],students:['Students','Enrolled learners'],progress:['Progress Tracking','Monitor student performance'],certificates:['Certificates','Completed learners'],feedback:['Feedback','Student messages']};
   document.getElementById('adminPageTitle').textContent=titles[page][0];
   document.getElementById('adminPageSub').textContent=titles[page][1];
@@ -1378,6 +1443,55 @@ function renderStuModulesPage(){
 }
 function openModuleViewer(id){
   const m=modules.find(x=>x.id===id);if(!m)return;
+  _viewingModId=id;
+
+  // Get quizzes for this module, pre-test first
+  const modQuizzes=quizzes.filter(q=>q.module===m.num||q.module.includes(m.num));
+  const preTests=modQuizzes.filter(q=>q.title.toLowerCase().includes('pre-test'));
+  const others=modQuizzes.filter(q=>!q.title.toLowerCase().includes('pre-test'));
+  const sortedQuizzes=[...preTests,...others];
+
+  const quizIcon={'Multiple Choice':'fas fa-list-ul','Fill in the Blank':'fas fa-pen','Identification':'fas fa-keyboard','Reflection (Pagninilay)':'fas fa-feather-alt','Gawain':'fas fa-pencil-alt'};
+  const quizColor={'Multiple Choice':'var(--info)','Fill in the Blank':'var(--warning)','Identification':'var(--accent)','Reflection (Pagninilay)':'var(--success)','Gawain':'#9c27b0'};
+
+  // Check if pre-test is done (required before other activities)
+  const preTestDone=preTests.length===0||preTests.some(pt=>stuQuizDone[pt.id]);
+
+  const quizzesHtml=sortedQuizzes.length?`
+    <div class="mv-section">
+      <h4><i class="fas fa-tasks" style="margin-right:6px;color:var(--primary-light)"></i>Mga Pagsusulit at Gawain</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+        ${sortedQuizzes.map((q,qi)=>{
+          const isPreTest=q.title.toLowerCase().includes('pre-test');
+          const isDone=stuQuizDone[q.id]||false;
+          // lock non-pretest items until pre-test is done
+          const isLocked=!isPreTest&&!preTestDone;
+          const ic=quizIcon[q.type]||'fas fa-question';
+          const col=quizColor[q.type]||'var(--info)';
+          return `<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg);border-radius:10px;border:1px solid ${isPreTest&&!isDone?'var(--accent)':isDone?'rgba(46,204,113,.4)':'var(--border)'};${isLocked?'opacity:.55':''}">
+            <div style="width:36px;height:36px;border-radius:9px;background:${col}18;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <i class="${isDone?'fas fa-check-circle':isLocked?'fas fa-lock':ic}" style="color:${isDone?'var(--success)':isLocked?'var(--danger)':col};font-size:.9rem"></i>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:.85rem;font-weight:700;color:var(--text-dark);display:flex;align-items:center;gap:6px">
+                ${isPreTest?'<span style="font-size:.68rem;background:var(--accent);color:#000;padding:2px 7px;border-radius:10px;font-weight:800;letter-spacing:.5px">UNAHIN</span>':''}
+                ${q.title}
+              </div>
+              <div style="font-size:.76rem;color:var(--text-light);margin-top:2px">${q.type} · ${q.questions} item${q.questions>1?'s':''}</div>
+            </div>
+            ${isDone
+              ?'<span class="badge badge-green" style="flex-shrink:0">✅ Tapos</span>'
+              :isLocked
+              ?'<span class="badge badge-red" style="flex-shrink:0;font-size:.72rem"><i class="fas fa-lock"></i> I-finish muna ang Pre-test</span>'
+              :`<button class="btn btn-primary btn-sm" style="flex-shrink:0" onclick="closeModal('moduleViewModal');startQuiz(${q.id})">
+                  <i class="fas fa-play"></i> ${isPreTest?'Simulan':'Gawin'}
+                </button>`
+            }
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`:'';
+
   document.getElementById('mvTitle').innerHTML=`<i class="fas fa-book-open" style="color:var(--primary-light);margin-right:8px"></i>${m.num}: ${m.title}`;
   document.getElementById('moduleViewContent').innerHTML=`
     <div class="mv-header">
@@ -1391,44 +1505,38 @@ function openModuleViewer(id){
       <div class="pdf-preview">
         <i class="fas fa-file-pdf"></i>
         <h4>${m.file||'Module Content.pdf'}</h4>
-        <p>Module PDF — ${Math.floor(Math.random()*20)+10} pages</p>
-        <button class="btn btn-danger btn-sm" style="margin-top:12px" onclick="showToast('Opening PDF viewer...','info')"><i class="fas fa-external-link-alt"></i> Open PDF</button>
+        <p>I-click para buksan ang module PDF</p>
+        <button class="btn btn-danger btn-sm" style="margin-top:12px" onclick="showToast('Binubuksan ang PDF viewer...','info')"><i class="fas fa-external-link-alt"></i> Buksan ang PDF</button>
       </div>
-      <div class="mv-section">
-        <h4>Module Checklist</h4>
-        <ul class="mv-checklist">
-          <li><i class="fas fa-check-circle check-done" style="color:var(--success)"></i> Read module content</li>
-          <li><i class="fas fa-check-circle check-done" style="color:var(--success)"></i> View attached PDF</li>
-          <li id="mvPretest-${id}"><i class="fas fa-${stuQuizDone[1]?'check-circle':'clock'}" style="color:var(--${stuQuizDone[1]?'success':'warning'})"></i> Complete Pre-test</li>
-          <li id="mvGawain-${id}"><i class="fas fa-${stuQuizDone[3]?'check-circle':'clock'}" style="color:var(--${stuQuizDone[3]?'success':'warning'})"></i> Submit Gawain 1</li>
-        </ul>
-      </div>
+      ${quizzesHtml}
     </div>`;
   openModal('moduleViewModal');
 }
 let _viewingModId=null;
 function markModuleViewed(){
-  // advance progress slightly if not 100
   const i=modules.findIndex(m=>m.id===_viewingModId)+1;
   if(i>0&&(stuProgress[i]||0)<100){stuProgress[i]=Math.min(100,(stuProgress[i]||0)+15);}
   renderStuModHome();renderStuModulesPage();renderStuTodo();
 }
-// patch openModuleViewer to track which module
-const _origOpenMV=openModuleViewer;
-window.openModuleViewer=(id)=>{_viewingModId=id;_origOpenMV(id);};
 
 function renderStuTodo(){
   const el=document.getElementById('stuTodoList');if(!el)return;
-  const todos=[
-    {done:true,label:'Module 1 Pre-test',detail:'Score: 76% ✅'},
-    {done:true,label:'Gawain 1 — Module 1',detail:'Submitted ✅'},
-    {done:stuProgress[2]>=25,label:'Module 2 Pre-test',detail:stuProgress[2]>=25?'Score: 78%':'Not yet started'},
-    {done:false,label:'Gawain 1 — Module 2',detail:stuProgress[2]>=25?'Pending':'🔒 Locked'},
-  ];
-  el.innerHTML=todos.map(t=>`
-    <div class="todo-item" onclick="${t.done?'showToast(\"Already completed! ✅\",\"success\")':'showToast(\"Start this task! 💪\",\"info\")'}">
-      <i class="fas fa-${t.done?'check-circle':t.detail.includes('🔒')?'lock':'clock'}" style="color:var(--${t.done?'success':t.detail.includes('🔒')?'danger':'warning'})"></i>
-      <div><div style="font-size:.84rem;font-weight:600">${t.label}</div><div style="font-size:.74rem;color:var(--text-light)">${t.detail}</div></div>
+  // Build todo list dynamically from all quizzes, pre-tests first
+  const preTests=quizzes.filter(q=>q.title.toLowerCase().includes('pre-test'));
+  const others=quizzes.filter(q=>!q.title.toLowerCase().includes('pre-test'));
+  const sorted=[...preTests,...others];
+  const items=sorted.slice(0,6).map(q=>{
+    const isDone=stuQuizDone[q.id]||false;
+    const modIdx=modules.findIndex(m=>q.module===m.num||q.module.includes(m.num));
+    const pct=stuProgress[modIdx+1]||0;
+    const isLocked=!isDone&&pct===0&&modIdx>0;
+    const detail=isDone?'Natapos na ✅':isLocked?'🔒 I-unlock ang module muna':'Hindi pa sinimulan';
+    return {done:isDone,locked:isLocked,label:q.title,detail,qid:q.id};
+  });
+  el.innerHTML=items.map(t=>`
+    <div class="todo-item" onclick="${t.done?`showToast('Natapos na! ✅','success')`:t.locked?`showToast('I-complete muna ang nakaraang module!','warning')`:`startQuiz(${t.qid})`}">
+      <i class="fas fa-${t.done?'check-circle':t.locked?'lock':'clock'}" style="color:var(--${t.done?'success':t.locked?'danger':'warning'})"></i>
+      <div style="flex:1;min-width:0"><div style="font-size:.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.label}</div><div style="font-size:.74rem;color:var(--text-light)">${t.detail}</div></div>
     </div>`).join('');
 }
 
@@ -1461,71 +1569,172 @@ function renderStuQuizList(){
 }
 
 // ========== QUIZ ENGINE ==========
+const typeIconMap={'Multiple Choice':'fas fa-list-ul','Fill in the Blank':'fas fa-pen','Identification':'fas fa-keyboard','Reflection (Pagninilay)':'fas fa-feather-alt','Gawain':'fas fa-pencil-alt'};
+const typeColorMap={'Multiple Choice':'var(--info)','Fill in the Blank':'var(--warning)','Identification':'var(--accent)','Reflection (Pagninilay)':'var(--success)','Gawain':'#9c27b0'};
+
 function startQuiz(qid){
   const qMeta=quizzes.find(x=>x.id===qid);if(!qMeta)return;
-  const quiz=sampleQuizData; // use sample data
-  let curQ=0,answers=[];
-  document.getElementById('quizTakeTitle').innerHTML=`<i class="fas fa-pen-alt" style="color:var(--primary-light);margin-right:8px"></i>${qMeta.title}`;
+  // use quizDB if available, else fall back to sampleQuizData
+  const quiz=quizDB[qid]||sampleQuizData;
+  const quizType=quiz.type||qMeta.type;
+  const isSubjective=quizType==='Gawain'||quizType==='Reflection (Pagninilay)';
+  const tColor=typeColorMap[quizType]||'var(--info)';
+  const tIcon=typeIconMap[quizType]||'fas fa-question';
 
-  function render(){
-    const q=quiz.questions[curQ];const pct=Math.round((curQ/quiz.questions.length)*100);
-    let html=`<div class="qt-wrap">
-      <div class="qt-header">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span style="font-size:.82rem;font-weight:700;color:var(--text-light)">Question ${curQ+1} of ${quiz.questions.length}</span>
-          <span class="badge badge-blue">${pct}% Done</span>
-        </div>
-        <div class="qt-progress-bar"><div class="qt-progress-fill" style="width:${pct}%"></div></div>
-      </div>
-      <div class="question-card"><h3>${q.q}</h3>`;
+  let curQ=0,answers=[];
+  document.getElementById('quizTakeTitle').innerHTML=`<i class="${tIcon}" style="color:${tColor};margin-right:8px"></i>${quiz.title||qMeta.title}`;
+
+  function renderQ(){
+    const q=quiz.questions[curQ];
+    const pct=Math.round((curQ/quiz.questions.length)*100);
+    let answerHtml='';
+
     if(q.type==='mc'){
-      html+=`<div class="choices-list">`;
+      answerHtml='<div class="choices-list">';
       ['A','B','C','D'].forEach((letter,i)=>{
         const sel=answers[curQ]===i;
-        html+=`<div class="choice-item${sel?' selected':''}" onclick="setAns(${i})"><div class="choice-letter">${letter}</div><span>${q.choices[i]}</span></div>`;
+        answerHtml+=`<div class="choice-item${sel?' selected':''}" onclick="window._setAns(${i})">
+          <div class="choice-letter" style="${sel?'background:var(--primary);color:#fff':''}">${letter}</div>
+          <span>${q.choices[i]}</span>
+        </div>`;
       });
-      html+=`</div>`;
-    }else if(q.type==='fill'){
-      html+=`<input class="fill-input" id="fillAns" type="text" value="${answers[curQ]||''}" placeholder="Type your answer here..." oninput="answers[${curQ}]=this.value"/>`;
-    }else{
-      html+=`<textarea class="reflect-ta" id="reflectAns" placeholder="Write your reflection here..." oninput="answers[${curQ}]=this.value">${answers[curQ]||''}</textarea>`;
+      answerHtml+='</div>';
+    } else if(q.type==='fill'){
+      answerHtml=`<div style="margin-top:12px">
+        <p style="font-size:.8rem;color:var(--text-light);margin-bottom:10px;font-weight:600"><i class="fas fa-pen" style="color:var(--warning);margin-right:6px"></i>Punan ang patlang:</p>
+        <input class="fill-input" type="text" value="${(answers[curQ]||'').replace(/"/g,'&quot;')}"
+          placeholder="Isulat ang iyong sagot..."
+          oninput="window._answers[${curQ}]=this.value"/>
+      </div>`;
+    } else if(q.type==='id'){
+      answerHtml=`<div style="margin-top:12px">
+        <p style="font-size:.8rem;color:var(--accent);margin-bottom:10px;font-weight:600"><i class="fas fa-keyboard" style="color:var(--accent);margin-right:6px"></i>Isulat ang tamang sagot:</p>
+        <input class="fill-input" type="text" value="${(answers[curQ]||'').replace(/"/g,'&quot;')}"
+          placeholder="Isulat ang iyong sagot dito..."
+          oninput="window._answers[${curQ}]=this.value"
+          style="border-color:var(--accent);text-align:center;font-weight:700;font-size:1rem"/>
+      </div>`;
+    } else if(q.type==='essay'){
+      answerHtml=`<div style="margin-top:12px">
+        <p style="font-size:.8rem;color:#9c27b0;margin-bottom:10px;font-weight:600"><i class="fas fa-pencil-alt" style="color:#9c27b0;margin-right:6px"></i>Isulat ang iyong sagot (2–3 pangungusap):</p>
+        <textarea class="reflect-ta" placeholder="Isulat dito ang iyong sagot..."
+          oninput="window._answers[${curQ}]=this.value"
+          style="min-height:160px;border-color:#9c27b0">${answers[curQ]||''}</textarea>
+      </div>`;
+    } else {
+      // reflect / pagninilay
+      answerHtml=`<div style="margin-top:12px">
+        <p style="font-size:.8rem;color:var(--success);margin-bottom:10px;font-weight:600"><i class="fas fa-feather-alt" style="color:var(--success);margin-right:6px"></i>Isulat ang iyong pagninilay:</p>
+        <textarea class="reflect-ta" placeholder="Ibahagi ang iyong saloobin nang malinaw at malalim..."
+          oninput="window._answers[${curQ}]=this.value"
+          style="min-height:180px;border-color:var(--success)">${answers[curQ]||''}</textarea>
+      </div>`;
     }
-    html+=`</div><div class="qt-nav">
-      ${curQ>0?`<button class="btn btn-outline" onclick="goQ(${curQ-1})"><i class="fas fa-arrow-left"></i> Back</button>`:'<span></span>'}
-      <button class="btn btn-primary" onclick="${curQ<quiz.questions.length-1?`goQ(${curQ+1})`:'submitQuiz()'}">
-        ${curQ<quiz.questions.length-1?'Next <i class="fas fa-arrow-right"></i>':'<i class="fas fa-check"></i> Submit'}
-      </button>
-    </div></div>`;
-    document.getElementById('quizTakeBody').innerHTML=html;
-    window.setAns=(i)=>{answers[curQ]=i;render();};
-    window.goQ=(n)=>{curQ=n;render();};
-    window.submitQuiz=()=>showResult();
+
+    const isLast=curQ===quiz.questions.length-1;
+    document.getElementById('quizTakeBody').innerHTML=`
+      <div class="qt-wrap">
+        <div class="qt-header">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:.82rem;font-weight:700;color:var(--text-light)">Tanong ${curQ+1} ng ${quiz.questions.length}</span>
+            <span class="badge" style="background:${tColor}22;color:${tColor};border:1px solid ${tColor}44"><i class="${tIcon}" style="margin-right:4px"></i>${quizType}</span>
+          </div>
+          <div class="qt-progress-bar"><div class="qt-progress-fill" style="width:${pct}%"></div></div>
+        </div>
+        <div class="question-card">
+          <h3>${q.q}</h3>
+          ${answerHtml}
+        </div>
+        <div class="qt-nav">
+          ${curQ>0?`<button class="btn btn-outline" onclick="window._goQ(${curQ-1})"><i class="fas fa-arrow-left"></i> Bumalik</button>`:'<span></span>'}
+          <button class="btn btn-primary" onclick="${isLast?'window._submitQuiz()':'window._goQ('+(curQ+1)+')'}">
+            ${isLast?'<i class="fas fa-check"></i> I-submit':'Susunod <i class="fas fa-arrow-right"></i>'}
+          </button>
+        </div>
+      </div>`;
+
+    // expose helpers on window so inline onclick can reach them inside the new innerHTML
+    window._answers=answers;
+    window._setAns=(i)=>{answers[curQ]=i;renderQ();};
+    window._goQ=(n)=>{curQ=n;renderQ();};
+    window._submitQuiz=showResult;
   }
 
   function showResult(){
     let correct=0;
-    quiz.questions.forEach((q,i)=>{if(q.type==='mc'&&answers[i]===q.answer)correct++;else if(q.type!=='mc')correct++;});
+    quiz.questions.forEach((q,i)=>{
+      const a=answers[i];
+      if(q.type==='mc'&&a===q.answer) correct++;
+      else if(q.type==='id'||q.type==='fill'){
+        const ua=(a||'').trim().toLowerCase();
+        const ca=(q.answer||'').toLowerCase();
+        if(ca&&(ua===ca||ua.includes(ca)||ca.includes(ua))) correct++;
+        else if(!ca) correct++;
+      } else {
+        // essay / reflect — credit if they wrote ≥15 chars
+        correct+=(a||'').trim().length>=15?1:0;
+      }
+    });
     const score=Math.round((correct/quiz.questions.length)*100);
-    const passed=score>=75;
+    const passed=isSubjective||score>=75;
+
+    // answer review for objective quizzes
+    let reviewHtml='';
+    if(!isSubjective){
+      reviewHtml=`<div style="margin-top:24px;text-align:left;border-top:1px solid var(--border);padding-top:16px">
+        <p style="font-weight:700;font-size:.85rem;margin-bottom:12px">📋 Pagsusuri ng mga Sagot:</p>`;
+      quiz.questions.forEach((q,i)=>{
+        let ok=false;
+        const a=answers[i];
+        if(q.type==='mc') ok=a===q.answer;
+        else if(q.type==='id'||q.type==='fill'){
+          const ua=(a||'').trim().toLowerCase();
+          const ca=(q.answer||'').toLowerCase();
+          ok=ca?(ua===ca||ua.includes(ca)||ca.includes(ua)):true;
+        }
+        const statusColor=ok?'var(--success)':'var(--danger)';
+        const statusIcon=ok?'✅':'❌';
+        let userAnsText='';
+        if(q.type==='mc') userAnsText=a!==undefined?q.choices[a]:'(walang sagot)';
+        else userAnsText=(a||'(walang sagot)');
+        reviewHtml+=`<div style="background:var(--bg);border-radius:8px;padding:10px 14px;margin-bottom:8px;border-left:3px solid ${statusColor}">
+          <div style="font-size:.76rem;color:var(--text-light);margin-bottom:3px">Q${i+1} ${statusIcon}</div>
+          <div style="font-size:.82rem;color:var(--text-dark);font-weight:600;margin-bottom:4px">${q.q}</div>
+          <div style="font-size:.79rem;color:var(--text-mid)">Iyong sagot: <strong>${userAnsText}</strong></div>
+          ${q.answer!==undefined&&q.type!=='mc'?`<div style="font-size:.79rem;color:var(--success);margin-top:2px">Tamang sagot: <strong>${q.answer}</strong></div>`:''}
+        </div>`;
+      });
+      reviewHtml+='</div>';
+    }
+
     document.getElementById('quizTakeBody').innerHTML=`
       <div class="result-wrap">
         <div class="score-circle" style="background:linear-gradient(135deg,${passed?'var(--primary),var(--primary-light)':'var(--danger),#c0392b'})">
-          <span>${score}%</span><span>Score</span>
+          <span>${isSubjective?'✓':score+'%'}</span>
+          <span>${isSubjective?'Naisumite':'Score'}</span>
         </div>
-        <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:8px">${passed?'Congratulations! 🎉':'Keep Practicing! 💪'}</h3>
-        <p style="color:var(--text-mid);font-size:.88rem;margin-bottom:16px">${passed?'You passed! You may proceed to the next activity.':'You need 75% to pass. Review the module and try again.'}</p>
-        <span class="badge ${passed?'badge-green':'badge-yellow'}" style="font-size:.9rem;padding:10px 20px">${passed?'✅ Passed':'⚠️ Needs Improvement'}</span>
-        <div style="margin-top:8px;color:var(--text-light);font-size:.82rem">${correct} / ${quiz.questions.length} correct answers</div>
+        <h3 style="font-size:1.2rem;font-weight:800;margin-bottom:8px">${passed?'Magaling! 🎉':'Subukan Muli! 💪'}</h3>
+        <p style="color:var(--text-mid);font-size:.88rem;margin-bottom:16px">
+          ${isSubjective?'Naisumite na ang iyong sagot. Ipagpatuloy ang aralin.':
+            passed?'Pumasa ka! Maaari ka nang magpatuloy sa susunod na gawain.':
+            'Kailangan ng 75% para pumasa. Balikan ang modyul at subukan muli.'}
+        </p>
+        <span class="badge ${passed?'badge-green':'badge-yellow'}" style="font-size:.9rem;padding:10px 20px">
+          ${passed?'✅ Pumasa':'⚠️ Subukan Muli'}
+        </span>
+        ${!isSubjective?`<div style="margin-top:8px;color:var(--text-light);font-size:.82rem">${correct} / ${quiz.questions.length} tamang sagot</div>`:''}
         <div style="margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <button class="btn btn-outline" onclick="closeModal('quizTakeModal');renderStuQuizList()">Close</button>
-          <button class="btn btn-primary" onclick="startQuiz(${qid})"><i class="fas fa-redo"></i> Retake</button>
-          ${passed?`<button class="btn btn-success" onclick="closeModal('quizTakeModal');showToast('Progress updated! ✅','success');stuQuizDone[${qid}]=true;renderStuQuizList();renderStuTodo()"><i class="fas fa-arrow-right"></i> Continue</button>`:''}
+          <button class="btn btn-outline" onclick="closeModal('quizTakeModal');renderStuQuizList()">Isara</button>
+          ${!isSubjective?`<button class="btn btn-primary" onclick="startQuiz(${qid})"><i class="fas fa-redo"></i> Ulitin</button>`:''}
+          ${passed?`<button class="btn btn-success" onclick="closeModal('quizTakeModal');showToast('Naitala ang iyong progreso! ✅','success');stuQuizDone[${qid}]=true;renderStuQuizList();renderStuTodo()"><i class="fas fa-arrow-right"></i> Magpatuloy</button>`:''}
         </div>
+        ${reviewHtml}
       </div>`;
-    if(passed){stuQuizDone[qid]=true;}
+    if(passed) stuQuizDone[qid]=true;
   }
 
-  render();openModal('quizTakeModal');
+  renderQ();
+  openModal('quizTakeModal');
 }
 
 // ========== STUDENT CERTS ==========
@@ -1580,12 +1789,15 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 
 // ========== TOAST ==========
+let _toastTimer=null;
 function showToast(msg,type='success'){
   const t=document.getElementById('toast');const ic=document.getElementById('toastIcon');const m=document.getElementById('toastMsg');
   m.textContent=msg;
   const cfg={success:['fas fa-check-circle','var(--success)'],warning:['fas fa-exclamation-triangle','var(--accent)'],info:['fas fa-info-circle','var(--info)'],danger:['fas fa-times-circle','var(--danger)']};
   const[cls,col]=cfg[type]||cfg.success;ic.className=cls;ic.style.color=col;t.style.borderLeftColor=col;
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);
+  if(_toastTimer){clearTimeout(_toastTimer);t.classList.remove('show');void t.offsetWidth;}
+  t.classList.add('show');
+  _toastTimer=setTimeout(()=>{t.classList.remove('show');_toastTimer=null;},3000);
 }
 
 // ========== KEYBOARD ==========
